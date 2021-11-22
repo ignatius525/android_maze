@@ -7,7 +7,20 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="difficulty">Choose Difficulty</string>
+    <string name="builder_text">Choose Builder</string>
+    <string name="driver_text">Choose Driver</string>
 
+    <string-array name="builder">
+        <item>DFS</item>
+        <item>Prim</item>
+        <item>Boruvka</item>
+    </string-array>
+
+    <string-array name="driver">
+        <item>Manual</item>
+        <item>Wizard</item>
+        <item>WallFollower</item>
+    </string-array>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
