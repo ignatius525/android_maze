@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +25,8 @@ import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 public class GeneratingFragment extends Fragment {
 
     private ProgressBar progressBar;
+    private String selectedDriver;
+    private String selectedRobotConfig;
     private Button begin_button;
     private FragmentGeneratingBinding binding;
     private String builder;
@@ -56,6 +62,56 @@ public class GeneratingFragment extends Fragment {
 //                textView1.setText(diff.toString());
             }
         });
+
+        Spinner spinner2 = getView().findViewById(R.id.spinner2);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.driver, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner2.setAdapter(adapter);
+        if (spinner2 != null){
+            spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                {
+                    // this line will get you the selected item of the spinner
+                    selectedDriver = parent.getItemAtPosition(position).toString();
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent)
+                {
+
+                }
+            });
+        }
+
+        Spinner spinner3 = getView().findViewById(R.id.spinner3);
+
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(), R.array.robot, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner3.setAdapter(adapter3);
+        if (spinner3 != null){
+            spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                {
+                    // this line will get you the selected item of the spinner
+                    selectedRobotConfig = parent.getItemAtPosition(position).toString();
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent)
+                {
+
+                }
+            });
+        }
         begin_button = getView().findViewById(R.id.button_begin);
         begin_button.setVisibility(View.GONE);
         progressBar = getView().findViewById(R.id.progressBar);
@@ -74,8 +130,15 @@ public class GeneratingFragment extends Fragment {
         binding.buttonBegin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(GeneratingFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_ThirdFragment);
+//                Toast.makeText(getActivity(), "DRIVER = " + selectedDriver, Toast.LENGTH_SHORT).show();
+                if (selectedDriver.equals("Manual")){
+                    NavHostFragment.findNavController(GeneratingFragment.this)
+                            .navigate(R.id.action_SecondFragment_to_ThirdFragment);
+                }
+                else{
+                    NavHostFragment.findNavController(GeneratingFragment.this)
+                            .navigate(R.id.action_SecondFragment_to_playAnimationFragment);
+                }
             }
         });
     }

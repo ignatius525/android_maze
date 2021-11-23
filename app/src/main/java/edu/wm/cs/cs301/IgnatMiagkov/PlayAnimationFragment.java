@@ -35,10 +35,10 @@ public class PlayAnimationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        clicks = getView().findViewById(R.id.clicks);
+//        clicks = getView().findViewById(R.id.clicks);
         //Button upButton = getView().findViewById(R.id.upButton);
-        TextView win = getView().findViewById(R.id.winning);
-        win.setVisibility(View.GONE);
+//        TextView win = getView().findViewById(R.id.winning);
+//        win.setVisibility(View.GONE);
 
         binding.upButton3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +46,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Up Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
-                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
+//                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        public void run() {
@@ -64,7 +64,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
-                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
+//                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        public void run() {
@@ -82,7 +82,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Left Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
-                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
+//                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        public void run() {
@@ -100,7 +100,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Right Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
-                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
+//                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        public void run() {
