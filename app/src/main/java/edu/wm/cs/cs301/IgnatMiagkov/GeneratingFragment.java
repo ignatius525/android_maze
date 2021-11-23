@@ -36,8 +36,11 @@ public class GeneratingFragment extends Fragment {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 String result = bundle.getString("builderKey");
+                Integer diff = bundle.getInt("difficultyKey");
                 TextView textView = getView().findViewById(R.id.textView3);
                 textView.setText(result);
+                TextView textView1 = getView().findViewById(R.id.textView4);
+                textView1.setText(diff.toString());
             }
         });
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {

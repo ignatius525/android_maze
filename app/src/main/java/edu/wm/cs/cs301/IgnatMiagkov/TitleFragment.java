@@ -20,6 +20,7 @@ public class TitleFragment extends Fragment {
 
     private FragmentTitleBinding binding;
     private String selectedValueForSpinner;
+    private int selectedDifficulty;
 
     @Override
     public View onCreateView(
@@ -52,6 +53,7 @@ public class TitleFragment extends Fragment {
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     // Write code to perform some action when touch is stopped.
                     Toast.makeText(getActivity(), "Current value is " + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
+                    selectedDifficulty = seekBar.getProgress();
                 }
             });
         }
@@ -86,6 +88,7 @@ public class TitleFragment extends Fragment {
             public void onClick(View view) {
                 Bundle result = new Bundle();
                 result.putString("builderKey", selectedValueForSpinner);
+                result.putInt("difficultyKey", selectedDifficulty);
                 getParentFragmentManager().setFragmentResult("requestKey", result);
                 NavHostFragment.findNavController(TitleFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
