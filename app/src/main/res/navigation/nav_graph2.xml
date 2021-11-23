@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_SecondFragment_to_ThirdFragment"
             app:destination="@id/ThirdFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_playAnimationFragment"
+            app:destination="@id/playAnimationFragment" />
     </fragment>
     <fragment
         android:id="@+id/ThirdFragment"
@@ -47,6 +50,27 @@
         tools:layout="@layout/fragment_winning" >
         <action
             android:id="@+id/action_winningFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playAnimationFragment"
+        android:name="edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment"
+        android:label="fragment_play_animation"
+        tools:layout="@layout/fragment_play_animation" >
+        <action
+            android:id="@+id/action_playAnimationFragment_to_losingFragment"
+            app:destination="@id/losingFragment" />
+        <action
+            android:id="@+id/action_playAnimationFragment_to_winningFragment"
+            app:destination="@id/winningFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/losingFragment"
+        android:name="edu.wm.cs.cs301.IgnatMiagkov.LosingFragment"
+        android:label="fragment_losing"
+        tools:layout="@layout/fragment_losing" >
+        <action
+            android:id="@+id/action_losingFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

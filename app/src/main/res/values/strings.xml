@@ -15,9 +15,13 @@
     <string name="revisit">Revisit</string>
     <string name="begin">Begin Maze</string>
     <string name="clicks">Clicks to Win: 10</string>
+    <string name="clicks_1000">Clicks to Win: 1000</string>
     <string name="win">Proceeding to Win Stage, please wait...</string>
     <string name="win_message">CONGRATS YOU WON</string>
+    <string name="lose_message">ROBOT CRASHED YOU LOST</string>
     <string name="return_home">Return to Title</string>
+    <string name="go2winning">Go2Winning</string>
+    <string name="go2losing">Go2Losing</string>
 
     <string-array name="builder">
         <item>DFS</item>
