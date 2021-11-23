@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_revisit"
         android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_marginEnd="72dp"
