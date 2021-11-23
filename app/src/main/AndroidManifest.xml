@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.wm.cs.cs301.IgnatMiagkov">
+    package="edu.wm.cs.cs301.IgnatMiagkov" >
 
     <application
         android:allowBackup="true"
@@ -8,12 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AMazeByIgnatMiagkov">
+        android:theme="@style/Theme.AMazeByIgnatMiagkov" >
         <activity
             android:name=".AMazeActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AMazeByIgnatMiagkov.NoActionBar">
+            android:label="@string/title_activity_amaze"
+            android:theme="@style/Theme.AMazeByIgnatMiagkov.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -2,14 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_graph2"
     app:startDestination="@id/FirstFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="edu.wm.cs.cs301.IgnatMiagkov.FirstFragment"
+        android:name="edu.wm.cs.cs301.IgnatMiagkov.TitleFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_title">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="edu.wm.cs.cs301.IgnatMiagkov.SecondFragment"
+        android:name="edu.wm.cs.cs301.IgnatMiagkov.GeneratingFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_generating">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
