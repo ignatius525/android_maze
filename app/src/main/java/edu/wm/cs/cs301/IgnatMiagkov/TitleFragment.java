@@ -52,8 +52,8 @@ public class TitleFragment extends Fragment {
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     // Write code to perform some action when touch is stopped.
-                    Toast.makeText(getActivity(), "Current value is " + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
-                    selectedDifficulty = seekBar.getProgress();
+                    Toast.makeText(getActivity(), "Current value is " + (seekBar.getProgress() + 1), Toast.LENGTH_SHORT).show();
+                    selectedDifficulty = (seekBar.getProgress() + 1);
                 }
             });
         }

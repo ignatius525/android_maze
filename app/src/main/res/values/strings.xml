@@ -11,6 +11,7 @@
     <string name="driver_text">Choose Driver</string>
     <string name="explore">Explore</string>
     <string name="revisit">Revisit</string>
+    <string name="begin">Begin Maze</string>
 
     <string-array name="builder">
         <item>DFS</item>

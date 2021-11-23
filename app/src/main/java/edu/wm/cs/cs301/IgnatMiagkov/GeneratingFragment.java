@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,14 +14,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.nio.channels.AsynchronousByteChannel;
+
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 
 public class GeneratingFragment extends Fragment {
 
     private ProgressBar progressBar;
+    private Button begin_button;
     private FragmentGeneratingBinding binding;
     private String builder;
     private Integer diff;
+    private long time;
+    AsyncTask task;
     Integer count = 1;
 
     @Override
@@ -43,18 +49,20 @@ public class GeneratingFragment extends Fragment {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 builder = bundle.getString("builderKey");
                 diff = bundle.getInt("difficultyKey");
+                time = diff * 50;
 //                TextView textView = getView().findViewById(R.id.textView3);
 //                textView.setText(builder);
 //                TextView textView1 = getView().findViewById(R.id.textView4);
 //                textView1.setText(diff.toString());
             }
         });
-
+        begin_button = getView().findViewById(R.id.button_begin);
+        begin_button.setVisibility(View.GONE);
         progressBar = getView().findViewById(R.id.progressBar);
         progressBar.setMax(100);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(0);
-        new MyTask().execute(100);
+        task = new MyTask().execute(100);
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +74,8 @@ public class GeneratingFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        task.cancel(true);
+        count = 1;
         super.onDestroyView();
         binding = null;
     }
@@ -75,7 +85,7 @@ public class GeneratingFragment extends Fragment {
         protected String doInBackground(Integer... params) {
             for (; count <= params[0]; count++) {
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(time);
                     publishProgress(count);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -85,11 +95,14 @@ public class GeneratingFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(String result) {
+            begin_button.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
+            count = 1;
+            this.cancel(true);
         }
         @Override
         protected void onPreExecute() {
-
+            progressBar.setProgress(0);
         }
         @Override
         protected void onProgressUpdate(Integer... values) {
