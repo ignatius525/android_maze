@@ -14,6 +14,8 @@
     <string name="explore">Explore</string>
     <string name="revisit">Revisit</string>
     <string name="begin">Begin Maze</string>
+    <string name="clicks">Clicks to Win: 10</string>
+    <string name="win">Proceeding to Win Stage, please wait...</string>
 
     <string-array name="builder">
         <item>DFS</item>

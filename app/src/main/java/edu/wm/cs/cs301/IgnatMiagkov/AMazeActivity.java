@@ -68,7 +68,31 @@ public class AMazeActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_amaze);
+
+//        navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+//    @Override
+//    public void onBackPressed(){
+//        FragmentManager fragmentManager = AMazeActivity.this.getSupportFragmentManager();
+//        List<Fragment> fragments = fragmentManager.getFragments();
+//        if(fragments != null){
+//            for(Fragment fragment : fragments){
+//                if(fragment != null && fragment.isVisible())
+//                    currentFrag = fragment;
+//            }
+//        }
+//
+//        NavController navController = Navigation.findNavController(this, currentFrag.getId());
+//        switch(currentFrag.getId()){
+//            case R.id.SecondFragment:
+//                navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
+//                break;
+//            case R.id.ThirdFragment:
+//                navController.navigate(R.id.action_ThirdFragment_to_FirstFragment);
+//                break;
+//        }
+//    }
 }

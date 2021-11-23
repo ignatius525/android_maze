@@ -67,6 +67,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="156dp"
         android:layout_marginEnd="16dp"
+        android:indeterminate="false"
+        android:progress="25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

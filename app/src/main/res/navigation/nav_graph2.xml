@@ -34,7 +34,19 @@
         android:label="@string/third_fragment_label"
         tools:layout="@layout/fragment_playing_manually" >
         <action
+            android:id="@+id/action_ThirdFragment_to_winningFragment"
+            app:destination="@id/winningFragment" />
+        <action
             android:id="@+id/action_ThirdFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/winningFragment"
+        android:name="edu.wm.cs.cs301.IgnatMiagkov.WinningFragment"
+        android:label="fragment_winning"
+        tools:layout="@layout/fragment_winning" >
+        <action
+            android:id="@+id/action_winningFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
