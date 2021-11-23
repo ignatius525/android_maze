@@ -9,6 +9,7 @@
     <string name="difficulty">Choose Difficulty</string>
     <string name="builder_text">Choose Builder</string>
     <string name="driver_text">Choose Driver</string>
+    <string name="robot_text">Choose Robot Config</string>
     <string name="explore">Explore</string>
     <string name="revisit">Revisit</string>
     <string name="begin">Begin Maze</string>
