@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.nio.channels.AsynchronousByteChannel;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
@@ -186,6 +188,8 @@ public class GeneratingFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
             count = 1;
             this.cancel(true);
+            Snackbar.make(getView(), "Don't forget to select a driver!", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
         }
         @Override
         protected void onPreExecute() {
