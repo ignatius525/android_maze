@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_playAnimationFragment_to_winningFragment"
             app:destination="@id/winningFragment" />
+        <action
+            android:id="@+id/action_playAnimationFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
     <fragment
         android:id="@+id/losingFragment"

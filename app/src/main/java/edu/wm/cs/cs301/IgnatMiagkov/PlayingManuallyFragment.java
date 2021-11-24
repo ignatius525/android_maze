@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +143,22 @@ public class PlayingManuallyFragment extends Fragment {
             }
         });
 
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    Toast.makeText(getActivity(), "Back press", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(PlayingManuallyFragment.this).navigate(R.id.action_ThirdFragment_to_FirstFragment);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
+
 
     @Override
     public void onDestroyView() {

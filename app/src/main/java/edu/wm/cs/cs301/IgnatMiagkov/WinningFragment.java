@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentWinningBinding;
@@ -35,7 +37,24 @@ public class WinningFragment extends Fragment {
                         .navigate(R.id.action_winningFragment_to_FirstFragment);
             }
         });
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    Toast.makeText(getActivity(), "Back press", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(WinningFragment.this).navigate(R.id.action_winningFragment_to_FirstFragment);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
+
+
 
     @Override
     public void onDestroyView() {

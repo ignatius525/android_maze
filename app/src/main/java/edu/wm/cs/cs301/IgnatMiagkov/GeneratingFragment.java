@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.IgnatMiagkov;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class GeneratingFragment extends Fragment {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 builder = bundle.getString("builderKey");
                 diff = bundle.getInt("difficultyKey");
-                time = diff * 50;
+                time = diff * 25;
 //                TextView textView = getView().findViewById(R.id.textView3);
 //                textView.setText(builder);
 //                TextView textView1 = getView().findViewById(R.id.textView4);
@@ -139,6 +140,21 @@ public class GeneratingFragment extends Fragment {
                     NavHostFragment.findNavController(GeneratingFragment.this)
                             .navigate(R.id.action_SecondFragment_to_playAnimationFragment);
                 }
+            }
+        });
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    Toast.makeText(getActivity(), "Back press", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(GeneratingFragment.this).navigate(R.id.action_SecondFragment_to_FirstFragment);
+                    return true;
+                }
+                return false;
             }
         });
     }

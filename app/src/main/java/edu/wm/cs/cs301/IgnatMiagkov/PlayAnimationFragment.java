@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -123,6 +125,21 @@ public class PlayAnimationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+            }
+        });
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    Toast.makeText(getActivity(), "Back press", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_FirstFragment);
+                    return true;
+                }
+                return false;
             }
         });
     }

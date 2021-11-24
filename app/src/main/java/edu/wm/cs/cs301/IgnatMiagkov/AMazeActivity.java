@@ -35,9 +35,9 @@ public class AMazeActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_amaze);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_amaze);
+//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 //        FragmentManager fragmentManager = AMazeActivity.this.getSupportFragmentManager();
 //        List<Fragment> fragments = fragmentManager.getFragments();
@@ -47,11 +47,11 @@ public class AMazeActivity extends AppCompatActivity {
 //                    currentFrag = fragment;
 //            }
 //        }
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//        binding.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 //                if (currentFrag != null){
 //                    switch (currentFrag.getId()){
 //                        case(2):
@@ -61,18 +61,18 @@ public class AMazeActivity extends AppCompatActivity {
 //                }
 //                NavHostFragment.findNavController(currentFrag)
 //                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
+//            }
+//        });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_amaze);
-
-//        navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_amaze);
+//
+////        navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
+//        return NavigationUI.navigateUp(navController, appBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
 
 //    @Override
 //    public void onBackPressed(){
@@ -95,4 +95,17 @@ public class AMazeActivity extends AppCompatActivity {
 //                break;
 //        }
 //    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fragmentManager = AMazeActivity.this.getSupportFragmentManager();
+        Fragment fragment1 = fragmentManager.findFragmentById(R.id.SecondFragment);
+        if (fragment1 != null)
+            return;
+
+        if (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStack();
+
+        }
+    }
 }
