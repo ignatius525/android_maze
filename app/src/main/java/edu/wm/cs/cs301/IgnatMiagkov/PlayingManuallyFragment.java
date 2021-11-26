@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class PlayingManuallyFragment extends Fragment {
                     binding.downButton.setVisibility(View.GONE);
                     binding.leftButton.setVisibility(View.GONE);
                     binding.rightButton.setVisibility(View.GONE);
+                    binding.toggleButton.setVisibility(View.GONE);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -82,6 +84,7 @@ public class PlayingManuallyFragment extends Fragment {
                     binding.downButton.setVisibility(View.GONE);
                     binding.leftButton.setVisibility(View.GONE);
                     binding.rightButton.setVisibility(View.GONE);
+                    binding.toggleButton.setVisibility(View.GONE);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -107,6 +110,7 @@ public class PlayingManuallyFragment extends Fragment {
                     binding.downButton.setVisibility(View.GONE);
                     binding.leftButton.setVisibility(View.GONE);
                     binding.rightButton.setVisibility(View.GONE);
+                    binding.toggleButton.setVisibility(View.GONE);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -132,6 +136,7 @@ public class PlayingManuallyFragment extends Fragment {
                     binding.downButton.setVisibility(View.GONE);
                     binding.leftButton.setVisibility(View.GONE);
                     binding.rightButton.setVisibility(View.GONE);
+                    binding.toggleButton.setVisibility(View.GONE);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -139,6 +144,20 @@ public class PlayingManuallyFragment extends Fragment {
                                     .navigate(R.id.action_ThirdFragment_to_winningFragment);
                         }
                     }, 3000);
+                }
+            }
+        });
+
+        binding.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    Snackbar.make(getView(), "MAP IS ON", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    // The toggle is disabled
+                    Snackbar.make(getView(), "MAP IS OFF", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
             }
         });

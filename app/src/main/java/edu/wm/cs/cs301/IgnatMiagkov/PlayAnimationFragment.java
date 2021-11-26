@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,6 +126,20 @@ public class PlayAnimationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+            }
+        });
+
+        binding.toggleButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    Snackbar.make(getView(), "MAP IS ON", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    // The toggle is disabled
+                    Snackbar.make(getView(), "MAP IS OFF", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
