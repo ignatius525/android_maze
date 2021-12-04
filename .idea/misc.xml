@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ignat/AndroidStudioProjects/AMazeByIgnatMiagkov/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38333333333333336" />
+        <entry key="..\:/Users/Ignat/AndroidStudioProjects/AMazeByIgnatMiagkov/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38333333333333336" />
         <entry key="..\:/Users/Ignat/AndroidStudioProjects/AMazeByIgnatMiagkov/app/src/main/res/layout/a_maze_activity.xml" value="0.48992355802640725" />
         <entry key="..\:/Users/Ignat/AndroidStudioProjects/AMazeByIgnatMiagkov/app/src/main/res/layout/activity_amaze.xml" value="0.5088044485634847" />
         <entry key="..\:/Users/Ignat/AndroidStudioProjects/AMazeByIgnatMiagkov/app/src/main/res/layout/activity_main.xml" value="0.375" />
