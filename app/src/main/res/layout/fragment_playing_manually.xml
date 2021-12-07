@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    class="edu.wm.cs.cs301.IgnatMiagkov$MazePanel"
+    class="edu.wm.cs.cs301.IgnatMiagkov.gui$MazePanel"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playManually"
@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".PlayingManuallyFragment">
 
-    <edu.wm.cs.cs301.IgnatMiagkov.MazePanel
+    <edu.wm.cs.cs301.IgnatMiagkov.gui.MazePanel
         android:id="@+id/mazePanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
