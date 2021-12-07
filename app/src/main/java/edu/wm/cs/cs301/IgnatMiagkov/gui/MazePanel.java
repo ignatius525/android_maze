@@ -2,18 +2,26 @@ package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
+import android.graphics.fonts.Font;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 
 public class MazePanel extends View implements P5PanelF21 {
-    private Paint paint;
-    private Canvas canvas;
+    private Paint paint = new Paint();
+    private Canvas myCanvas;
     private Path newPath;
+
+    private Bitmap bitmap = Bitmap.createBitmap(Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels, Bitmap.Config.ARGB_8888);
+
+    private static final Typeface font = Typeface.SANS_SERIF;
+
     static final int greenWM = Integer.decode("#115740");
     static final int goldWM = Integer.decode("#916f41");
     static final int yellowWM = Integer.decode("#FFFF99");
@@ -25,32 +33,28 @@ public class MazePanel extends View implements P5PanelF21 {
 
     public MazePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint = new Paint();
-//        canvas = new Canvas();
-
+        setFocusable(false);
+        myCanvas = new Canvas(bitmap);
+        myTestImage();
     }
 
     @Override
     public void onDraw(Canvas canvas){
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        this.canvas = canvas;
-//        int width = Resources.getSystem().getDisplayMetrics().widthPixels;
-//        int height=  Resources.getSystem().getDisplayMetrics().heightPixels;
-//        addBackground(10, height, width);
-//        super.onDraw(canvas);
-        this.canvas = canvas;
-        paint.setColor(Color.BLACK);
-//        this.addBackground(10, 400, 400);
-//        this.addFilledRectangle(300, 330, 200, 200);
-        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
-//        paint.setStrokeWidth(3);
-//        canvas.drawRect(30, 30, 80, 80, paint);
-//        paint.setStrokeWidth(0);
-//        paint.setColor(Color.CYAN);
-//        canvas.drawRect(33, 60, 77, 77, paint );
-//        paint.setColor(Color.YELLOW);
-//        canvas.drawRect(33, 33, 77, 60, paint );
+//        canvas.drawRect(100, 100, 200, 200, paint);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+//        paint.setColor(Color.BLACK);
+//        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
+
+    }
+
+    private void myTestImage(){
+//        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
+        this.setColor(Color.parseColor("#ff0000"));
+        this.addFilledOval(200, 200, 200, 200);
+        this.setColor(Color.parseColor("#00ff00"));
+        this.addFilledOval(600, 200, 200, 200);
+        this.setColor(Color.parseColor("#ffff33"));
+        this.addFilledRectangle(200, 1050, 200, 200);
     }
 
 
@@ -61,6 +65,8 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public boolean isOperational() {
+        if (this.myCanvas != null)
+            return true;
         return false;
     }
 
@@ -78,15 +84,15 @@ public class MazePanel extends View implements P5PanelF21 {
     public void addBackground(float percentToExit, int viewHeight, int viewWidth) {
         paint.setStyle(Paint.Style.FILL);
         this.setColor(getBackgroundColor(10, true));
-        canvas.drawRect(0, 0, viewWidth, viewHeight/2, paint);
+        myCanvas.drawRect(0, 0, viewWidth, viewHeight/2, paint);
         this.setColor(getBackgroundColor(10, false));
-        canvas.drawRect(0, viewHeight/2, viewWidth,viewHeight, paint);
+        myCanvas.drawRect(0, viewHeight/2, viewWidth,viewHeight, paint);
     }
 
     @Override
     public void addFilledRectangle(int x, int y, int width, int height) {
         paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(x, y, width, height, paint);
+        myCanvas.drawRect(x, y, x + width, y + height, paint);
     }
 
     @Override
@@ -98,7 +104,7 @@ public class MazePanel extends View implements P5PanelF21 {
             newPath.lineTo(xPoints[i], yPoints[i]);
         }
         newPath.lineTo(xPoints[0], yPoints[0]);
-        canvas.drawPath(newPath, paint);
+        myCanvas.drawPath(newPath, paint);
     }
 
     @Override
@@ -110,28 +116,29 @@ public class MazePanel extends View implements P5PanelF21 {
             newPath.lineTo(xPoints[i], yPoints[i]);
         }
         newPath.lineTo(xPoints[0], yPoints[0]);
-        canvas.drawPath(newPath, paint);
+        myCanvas.drawPath(newPath, paint);
     }
 
     @Override
     public void addLine(int startX, int startY, int endX, int endY) {
-        canvas.drawLine(startX, startY, endX, endY, paint);
+        myCanvas.drawLine(startX, startY, endX, endY, paint);
     }
 
     @Override
     public void addFilledOval(int x, int y, int width, int height) {
         paint.setStyle(Paint.Style.FILL);
-        canvas.drawOval(x, y, x + width, y + height, paint);
+        myCanvas.drawOval(x, y, x + width, y + height, paint);
     }
 
     @Override
     public void addArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-
+        paint.setStyle(Paint.Style.STROKE);
+        myCanvas.drawArc(x, y, x + width, y + height, startAngle, arcAngle, false, paint);
     }
 
     @Override
     public void addMarker(float x, float y, String str) {
-
+        myCanvas.drawText(str, x, y, paint);
     }
 
     @Override
