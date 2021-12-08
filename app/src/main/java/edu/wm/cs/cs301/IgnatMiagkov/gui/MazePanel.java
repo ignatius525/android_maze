@@ -16,10 +16,11 @@ import android.view.View;
 public class MazePanel extends View implements P5PanelF21 {
     private Paint paint = new Paint();
     private Canvas myCanvas;
-    private Path newPath;
+    private Canvas UICanvas;
+    private Path newPath = new Path();
 
-    private Bitmap bitmap = Bitmap.createBitmap(Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels, Bitmap.Config.ARGB_8888);
-
+//    private Bitmap bitmap = Bitmap.createBitmap(Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels, Bitmap.Config.ARGB_8888);
+    private Bitmap bitmap;
     private static final Typeface font = Typeface.SANS_SERIF;
 
     static final int greenWM = Integer.decode("#115740");
@@ -34,33 +35,40 @@ public class MazePanel extends View implements P5PanelF21 {
     public MazePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFocusable(false);
+        DisplayMetrics testing = getResources().getDisplayMetrics();
+        bitmap = Bitmap.createBitmap(testing, testing.widthPixels, testing.heightPixels, Bitmap.Config.ARGB_8888);
         myCanvas = new Canvas(bitmap);
         myTestImage();
     }
 
     @Override
     public void onDraw(Canvas canvas){
-//        canvas.drawRect(100, 100, 200, 200, paint);
+        super.onDraw(canvas);
+        if (UICanvas == null)
+            UICanvas = canvas;
         canvas.drawBitmap(bitmap, 0, 0, paint);
-//        paint.setColor(Color.BLACK);
-//        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
-
     }
 
     private void myTestImage(){
-//        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
+        this.addBackground(10,Resources.getSystem().getDisplayMetrics().heightPixels ,Resources.getSystem().getDisplayMetrics().widthPixels);
         this.setColor(Color.parseColor("#ff0000"));
         this.addFilledOval(200, 200, 200, 200);
         this.setColor(Color.parseColor("#00ff00"));
         this.addFilledOval(600, 200, 200, 200);
         this.setColor(Color.parseColor("#ffff33"));
         this.addFilledRectangle(200, 1050, 200, 200);
+        this.setColor(Color.parseColor("#0000ff"));
+        this.addFilledPolygon(new int[]{600, 600, 750, 900, 740}, new int[]{600, 790, 730, 1000, 600}, 5 );
+//        this.setColor(Color.parseColor("#ff99ff"));
+        this.addLine(200, 1400, 475, 1300);
+        this.addLine(350, 1350, 600, 1500);
+        this.addLine(700, 1100, 640, 1600);
     }
 
 
     @Override
     public void commit() {
-
+        super.draw(myCanvas);
     }
 
     @Override
@@ -121,6 +129,7 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void addLine(int startX, int startY, int endX, int endY) {
+//        paint.setStyle(Paint.Style.STROKE);
         myCanvas.drawLine(startX, startY, endX, endY, paint);
     }
 

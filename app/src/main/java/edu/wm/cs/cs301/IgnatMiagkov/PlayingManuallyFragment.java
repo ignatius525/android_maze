@@ -21,12 +21,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentPlayingManuallyBinding;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.MazePanel;
 
 public class PlayingManuallyFragment extends Fragment {
 
     private TextView clicks;
     private FragmentPlayingManuallyBinding binding;
     private int countButtonClicks;
+    private MazePanel panel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +41,7 @@ public class PlayingManuallyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        panel = getView().findViewById(R.id.mazePanel);
         clicks = getView().findViewById(R.id.clicks);
         //Button upButton = getView().findViewById(R.id.upButton);
         TextView win = getView().findViewById(R.id.winning);
@@ -75,6 +78,8 @@ public class PlayingManuallyFragment extends Fragment {
             public void onClick(View v) {
                 Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                panel.addFilledRectangle(1000, 1000, 50, 50);
+                panel.commit();
                 countButtonClicks++;
                 clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
                 if (countButtonClicks == 10){
