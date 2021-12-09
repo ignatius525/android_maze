@@ -38,7 +38,7 @@ public class MazePanel extends View implements P5PanelF21 {
         DisplayMetrics testing = getResources().getDisplayMetrics();
         bitmap = Bitmap.createBitmap(testing, testing.widthPixels, testing.heightPixels, Bitmap.Config.ARGB_8888);
         myCanvas = new Canvas(bitmap);
-        myTestImage();
+//        myTestImage();
     }
 
     @Override
