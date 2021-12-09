@@ -121,7 +121,6 @@ public class GeneratingFragment extends Fragment {
         progressBar.setMax(100);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(0);
-        task = new MyTask().execute(100);
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,6 +158,18 @@ public class GeneratingFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        task = new MyTask().execute(100);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        task.cancel(true);
     }
 
     @Override
