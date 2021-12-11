@@ -27,6 +27,12 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.Constants;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.FirstPersonView;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Map;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.MazePanel;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.ReliableRobot;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.RobotDriver;
+
+import edu.wm.cs.cs301.IgnatMiagkov.RobotHolder;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.UnreliableRobot;
 
 
 public class PlayAnimationFragment extends Fragment {
@@ -56,6 +62,11 @@ public class PlayAnimationFragment extends Fragment {
     // the FirstPersonView obtains this information and the Map uses it for highlighting currently visible walls on the map
     private CompassRose cr; // compass rose to show current direction
 
+    private String sensors;
+
+    Robot robot;
+    RobotDriver driver;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +82,9 @@ public class PlayAnimationFragment extends Fragment {
         //Button upButton = getView().findViewById(R.id.upButton);
 //        TextView win = getView().findViewById(R.id.winning);
 //        win.setVisibility(View.GONE);
+        panel = getView().findViewById(R.id.mazePanel2);
+        getView().findViewById(R.id.go2winning).setVisibility(View.GONE);
+        getView().findViewById(R.id.go2losing).setVisibility(View.GONE);
 
         binding.upButton3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,11 +178,38 @@ public class PlayAnimationFragment extends Fragment {
                     // The toggle is enabled
                     Snackbar.make(getView(), "MAP IS ON", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    mapMode = true;
                 } else {
                     // The toggle is disabled
                     Snackbar.make(getView(), "MAP IS OFF", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    mapMode = false;
                 }
+                draw();
+            }
+        });
+
+        binding.wallToggle3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    showMaze = true;
+                } else{
+                    showMaze = false;
+                }
+                draw();
+            }
+        });
+
+        binding.solutionSwitch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    showSolution = true;
+                } else{
+                    showSolution = false;
+                }
+                draw();
             }
         });
 
@@ -216,6 +257,21 @@ public class PlayAnimationFragment extends Fragment {
             // else: dry-run without graphics, most likely for testing purposes
             printWarning();
         }
+
+        sensors = RobotHolder.getDataSensors();
+
+        if (sensors == "1111"){
+            robot = new ReliableRobot(this, sensors);
+        }
+        else{
+            robot = new UnreliableRobot(this, sensors);
+        }
+
+        driver = RobotHolder.getDataDriver();
+
+        driver.setRobot(robot);
+        driver.setMaze(mazeConfig);
+        robot.toggleMapAndSolution();
     }
 
     /**
@@ -450,6 +506,33 @@ public class PlayAnimationFragment extends Fragment {
                 mazeConfig.hasWall(px, py, getCurrentDirection()) &&
                 mazeConfig.hasWall(px, py, getCurrentDirection().oppositeDirection().rotateClockwise()) &&
                 mazeConfig.hasWall(px, py, getCurrentDirection().rotateClockwise()));
+    }
+
+    /**
+     * Sets the robot and robot driver
+     * @param robot the robot that is used for the automated playing mode
+     * @param robotdriver the driver that is used for the automated playing mode
+     */
+    public void setRobotAndDriver(Robot robot, RobotDriver robotdriver) {
+        this.robot = robot;
+        driver = robotdriver;
+
+    }
+    /**
+     * The robot that is used in the automated playing mode.
+     * Null if run in the manual mode.
+     * @return the robot, may be null
+     */
+    public Robot getRobot() {
+        return robot;
+    }
+    /**
+     * The robot driver that is used in the automated playing mode.
+     * Null if run in the manual mode.
+     * @return the driver, may be null
+     */
+    public RobotDriver getDriver() {
+        return driver;
     }
 
     @Override

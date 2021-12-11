@@ -1,6 +1,9 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.view.View;
+
 import edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment;
+import edu.wm.cs.cs301.IgnatMiagkov.R;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.CardinalDirection;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Constants.UserInput;
@@ -192,12 +195,16 @@ public class ReliableRobot implements Robot {
 		switch(turn) {
 		case AROUND:
 //			controller.keyDown(UserInput.LEFT, 1);
+			controller.getView().findViewById(R.id.leftButton3).performClick();
+			controller.getView().findViewById(R.id.leftButton3).performClick();
 //			controller.keyDown(UserInput.LEFT, 1);
 			break;
 		case LEFT:
+			controller.getView().findViewById(R.id.leftButton3).performClick();
 //			controller.keyDown(UserInput.LEFT, 1);
 			break;
 		case RIGHT:
+			controller.getView().findViewById(R.id.rightButton3).performClick();
 //			controller.keyDown(UserInput.RIGHT, 1);
 			break;
 		}
@@ -230,6 +237,7 @@ public class ReliableRobot implements Robot {
 				}
 				else {
 //					controller.keyDown(UserInput.UP, 1);
+					controller.getView().findViewById(R.id.upButton3).performClick();
 					this.odometer++;
 					distance--;
 				}
@@ -399,6 +407,12 @@ public class ReliableRobot implements Robot {
 //		controller.keyDown(UserInput.TOGGLEFULLMAP, 1);
 //		controller.keyDown(UserInput.TOGGLESOLUTION, 1);
 //		controller.keyDown(UserInput.TOGGLELOCALMAP, 1);
+		controller.getView().findViewById(R.id.toggleButton3).performClick();
+		controller.getView().findViewById(R.id.wallToggle3).performClick();
+		controller.getView().findViewById(R.id.solutionSwitch3).performClick();
+		controller.getView().findViewById(R.id.toggleButton3).setVisibility(View.GONE);
+		controller.getView().findViewById(R.id.wallToggle3).setVisibility(View.GONE);
+		controller.getView().findViewById(R.id.solutionSwitch3).setVisibility(View.GONE);
 	}
 
 	@Override

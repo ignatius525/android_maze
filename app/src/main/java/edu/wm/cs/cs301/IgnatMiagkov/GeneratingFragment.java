@@ -35,6 +35,10 @@ import edu.wm.cs.cs301.IgnatMiagkov.generation.MazeFactory;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Order;
 import edu.wm.cs.cs301.IgnatMiagkov.MazeHolder;
 import edu.wm.cs.cs301.IgnatMiagkov.OrderHolder;
+import edu.wm.cs.cs301.IgnatMiagkov.RobotHolder;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.ReliableRobot;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.WallFollower;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.Wizard;
 
 public class GeneratingFragment extends Fragment implements Order{
 
@@ -120,7 +124,16 @@ public class GeneratingFragment extends Fragment implements Order{
                 {
                     // this line will get you the selected item of the spinner
                     selectedDriver = parent.getItemAtPosition(position).toString();
-
+                    switch(selectedDriver){
+                        case "Wizard":
+                            RobotHolder.setDataDriver(new Wizard());
+                            break;
+                        case "WallFollower":
+                            RobotHolder.setDataDriver(new WallFollower());
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 @Override
@@ -145,6 +158,20 @@ public class GeneratingFragment extends Fragment implements Order{
                 {
                     // this line will get you the selected item of the spinner
                     selectedRobotConfig = parent.getItemAtPosition(position).toString();
+                    switch(selectedRobotConfig){
+                        case "Premium":
+                            RobotHolder.setDataSensors("1111");
+                            break;
+                        case "Mediocre":
+                            RobotHolder.setDataSensors("1001");
+                            break;
+                        case "So-So":
+                            RobotHolder.setDataSensors("0110");
+                            break;
+                        case "Shaky":
+                            RobotHolder.setDataSensors("0000");
+                            break;
+                    }
 
                 }
 
