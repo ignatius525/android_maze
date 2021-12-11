@@ -4,12 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
@@ -29,6 +31,24 @@ public class WinningFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getParentFragmentManager().setFragmentResultListener("forWinScreenManual", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                // We use a String here, but any type that can be put in a Bundle is supported
+                int minDistance = bundle.getInt("minDistance");
+                int distanceTraveled = bundle.getInt("distanceTraveled");
+//                Snackbar.make(getView(), "DIFF IS" + diff, Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+                TextView textView1 = getView().findViewById(R.id.minDistance);
+                textView1.setText("Minimum Distance to Exit: " + minDistance);
+                TextView textView2 = getView().findViewById(R.id.disTraveled);
+                textView2.setText("Distance Traveled: " + distanceTraveled);
+//                textView.setText(builder);
+//                TextView textView1 = getView().findViewById(R.id.textView4);
+//                textView1.setText(diff.toString());
+            }
+        });
 
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override

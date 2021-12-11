@@ -41,6 +41,7 @@ public class PlayingManuallyFragment extends Fragment {
     FirstPersonView firstPersonView;
     Map mapView;
     private int distanceTraveled;
+    int minDistance;
     private boolean showMaze;           // toggle switch to show overall maze on screen
     private boolean showSolution;       // toggle switch to show solution in overall maze on screen
     private boolean mapMode; // true: display map of maze, false: do not display map of maze
@@ -91,6 +92,10 @@ public class PlayingManuallyFragment extends Fragment {
 //                clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
                 distanceTraveled++;
                 if (isOutside(px,py)){
+                    Bundle result = new Bundle();
+                    result.putInt("distanceTraveled", distanceTraveled);
+                    result.putInt("minDistance", minDistance);
+                    getParentFragmentManager().setFragmentResult("forWinScreenManual", result);
                     NavHostFragment.findNavController(PlayingManuallyFragment.this)
                             .navigate(R.id.action_ThirdFragment_to_winningFragment);
                 }
@@ -209,7 +214,7 @@ public class PlayingManuallyFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mazeConfig = MazeHolder.getMaze();
-        int minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
+        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         distanceTraveled = 0;
         showMaze = false ;
         showSolution = false ;
