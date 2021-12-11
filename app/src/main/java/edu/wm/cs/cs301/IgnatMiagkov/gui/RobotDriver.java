@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.os.Handler;
+
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 
 /**
@@ -79,6 +81,8 @@ public interface RobotDriver {
 	 * @return the total length of the journey in number of cells traversed
 	 */
 	int getPathLength();
+
+	void stopHandler();
 	
 }
 

@@ -260,4 +260,9 @@ public class WallFollower implements RobotDriver {
 		return robot.getOdometerReading();
 	}
 
+	@Override
+	public void stopHandler() {
+
+	}
+
 }

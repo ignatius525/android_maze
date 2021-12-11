@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.os.Handler;
+
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Direction;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
@@ -13,7 +15,9 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
  *
  */
 public class Wizard implements RobotDriver {
-	
+
+	Runnable driving;
+	Handler handler = new Handler();
 	private Robot robot;
 	private Maze maze;
 	private static final int INITIAL_ENERGY = 3600;
@@ -60,19 +64,37 @@ public class Wizard implements RobotDriver {
 		// }
 		
 		robot.toggleMapAndSolution();
-		try {
-			while(this.drive1Step2Exit()) {
-				if (getPathLength() > (this.maze.getHeight() * this.maze.getWidth())){
-					return false;
+//		try {
+//			while(this.drive1Step2Exit()) {
+//				if (getPathLength() > (this.maze.getHeight() * this.maze.getWidth())){
+//					return false;
+//				}
+//			}
+//			return true;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.exit(1);
+//		}
+
+		 driving = new Runnable() {
+			@Override
+			public void run() {
+				try{
+					if (drive1Step2Exit()){
+						handler.postDelayed(this, 200);
+					}
+					else{
+						handler.removeCallbacks(this);
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+					System.exit(1);
 				}
 			}
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
+		};
+		handler.post(driving);
 		return false;
+
 	}
 
 	/**
@@ -105,10 +127,10 @@ public class Wizard implements RobotDriver {
 				robot.rotate(Turn.RIGHT);
 			}
 			robot.move(1);
-			robot.stopFailureAndRepairProcess(Direction.FORWARD);
-			robot.stopFailureAndRepairProcess(Direction.LEFT);
-			robot.stopFailureAndRepairProcess(Direction.RIGHT);
-			robot.stopFailureAndRepairProcess(Direction.BACKWARD);
+//			robot.stopFailureAndRepairProcess(Direction.FORWARD);
+//			robot.stopFailureAndRepairProcess(Direction.LEFT);
+//			robot.stopFailureAndRepairProcess(Direction.RIGHT);
+//			robot.stopFailureAndRepairProcess(Direction.BACKWARD);
 			return false;
 		}
 		
@@ -206,4 +228,8 @@ public class Wizard implements RobotDriver {
 		return robot.getOdometerReading();
 	}
 
+	@Override
+	public void stopHandler(){
+		handler.removeCallbacks(driving);
+	}
 }

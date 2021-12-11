@@ -33,6 +33,7 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.RobotDriver;
 
 import edu.wm.cs.cs301.IgnatMiagkov.RobotHolder;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.UnreliableRobot;
+import edu.wm.cs.cs301.IgnatMiagkov.gui.WallFollower;
 
 
 public class PlayAnimationFragment extends Fragment {
@@ -92,6 +93,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Up Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
+                walk(1);
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -110,6 +112,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
+                walk(-1);
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -128,6 +131,8 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Left Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
+//                rotate(1);
+                rotate(1);
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -146,6 +151,7 @@ public class PlayAnimationFragment extends Fragment {
                 Snackbar.make(v, "Right Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 countButtonClicks++;
+                rotate(-1);
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -221,6 +227,7 @@ public class PlayAnimationFragment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
                     Toast.makeText(getActivity(), "Back press", Toast.LENGTH_SHORT).show();
+                    driver.stopHandler();
                     NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_FirstFragment);
                     return true;
                 }
@@ -271,7 +278,31 @@ public class PlayAnimationFragment extends Fragment {
 
         driver.setRobot(robot);
         driver.setMaze(mazeConfig);
-        robot.toggleMapAndSolution();
+//        robot.toggleMapAndSolution();
+
+        try{
+            driver.drive2Exit();
+        } catch(AssertionError e){
+            if (driver.getClass().getName().equals("WallFollower")){
+                robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
+                robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
+            }
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+            robot.resetOdometer();
+            robot.setBatteryLevel(3600);
+        } catch(Exception e){
+            if (driver.getClass().getName().equals("WallFollower")){
+                robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
+                robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
+            }
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+            robot.resetOdometer();
+            robot.setBatteryLevel(3600);
+        }
     }
 
     /**
