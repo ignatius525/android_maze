@@ -17,6 +17,7 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
 public class Wizard implements RobotDriver {
 
 	Runnable driving;
+	private int speed;
 	Handler handler = new Handler();
 	private Robot robot;
 	private Maze maze;
@@ -81,7 +82,7 @@ public class Wizard implements RobotDriver {
 			public void run() {
 				try{
 					if (drive1Step2Exit()){
-						handler.postDelayed(this, 200);
+						handler.postDelayed(this, speed);
 					}
 					else{
 						handler.removeCallbacks(this);
@@ -231,5 +232,10 @@ public class Wizard implements RobotDriver {
 	@Override
 	public void stopHandler(){
 		handler.removeCallbacks(driving);
+	}
+
+	@Override
+	public void setSpeed(int time) {
+		speed = 40 * time + 20;
 	}
 }

@@ -83,6 +83,8 @@ public interface RobotDriver {
 	int getPathLength();
 
 	void stopHandler();
+
+	void setSpeed(int time);
 	
 }
 

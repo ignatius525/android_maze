@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.os.Handler;
+
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Direction;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
@@ -15,6 +17,9 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
  */
 public class WallFollower implements RobotDriver {
 
+	Runnable driving;
+	private int speed;
+	Handler handler = new Handler();
 	private Robot robot;
 	private Maze maze;
 	private static final int INITIAL_ENERGY = 3600;
@@ -38,18 +43,28 @@ public class WallFollower implements RobotDriver {
 	@Override
 	public boolean drive2Exit() throws Exception {
 		// TODO Auto-generated method stub
-		try {
-			while(this.drive1Step2Exit()) {
-				if (getPathLength() > (this.maze.getHeight() * this.maze.getWidth())){
-					return false;
+		robot.toggleMapAndSolution();
+		driving = new Runnable() {
+			@Override
+			public void run() {
+				try{
+					if (drive1Step2Exit()){
+						handler.postDelayed(this, speed);
+					}
+					else{
+						handler.removeCallbacks(this);
+					}
+				} catch (Exception e){
+					try {
+						throw new Exception(e);
+					} catch (Exception exception) {
+						exception.printStackTrace();
+					}
 				}
 			}
-			return true;
-		} catch (Exception e) {
-//			e.printStackTrace();
-			throw new Exception(e);
-//			System.exit(1);
-		}
+		};
+		handler.post(driving);
+		return false;
 	}
 
 	@Override
@@ -263,6 +278,11 @@ public class WallFollower implements RobotDriver {
 	@Override
 	public void stopHandler() {
 
+	}
+
+	@Override
+	public void setSpeed(int time){
+		speed = 40 * time + 20;
 	}
 
 }

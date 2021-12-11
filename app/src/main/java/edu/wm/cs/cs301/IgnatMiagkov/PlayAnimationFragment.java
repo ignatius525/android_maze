@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,10 @@ public class PlayAnimationFragment extends Fragment {
                         .setAction("Action", null).show();
                 countButtonClicks++;
                 walk(1);
+                if (isOutside(px,py)){
+                    NavHostFragment.findNavController(PlayAnimationFragment.this)
+                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
+                }
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -113,6 +118,10 @@ public class PlayAnimationFragment extends Fragment {
                         .setAction("Action", null).show();
                 countButtonClicks++;
                 walk(-1);
+                if (isOutside(px,py)){
+                    NavHostFragment.findNavController(PlayAnimationFragment.this)
+                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
+                }
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
@@ -219,6 +228,28 @@ public class PlayAnimationFragment extends Fragment {
             }
         });
 
+        SeekBar seekBar = getView().findViewById(R.id.speedBar);
+        if (seekBar != null){
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    // Write code to perform some action when progress is changed.
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // Write code to perform some action when touch is started.
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // Write code to perform some action when touch is stopped.
+                    Toast.makeText(getActivity(), "Current value is " + (seekBar.getProgress() + 1), Toast.LENGTH_SHORT).show();
+                    driver.setSpeed(10 - seekBar.getProgress());
+                }
+            });
+        }
+
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -239,6 +270,10 @@ public class PlayAnimationFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getView().findViewById(R.id.upButton3).setVisibility(View.GONE);
+        getView().findViewById(R.id.downButton3).setVisibility(View.GONE);
+        getView().findViewById(R.id.leftButton3).setVisibility(View.GONE);
+        getView().findViewById(R.id.rightButton3).setVisibility(View.GONE);
         mazeConfig = MazeHolder.getMaze();
 //        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         distanceTraveled = 0;
