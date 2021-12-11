@@ -96,8 +96,9 @@ public class PlayAnimationFragment extends Fragment {
                 countButtonClicks++;
                 walk(1);
                 if (isOutside(px,py)){
+                    driver.stopHandler();
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
-                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
+                            .navigate(R.id.action_playAnimationFragment_to_winningFragment);
                 }
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();
@@ -119,8 +120,9 @@ public class PlayAnimationFragment extends Fragment {
                 countButtonClicks++;
                 walk(-1);
                 if (isOutside(px,py)){
+                    driver.stopHandler();
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
-                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
+                            .navigate(R.id.action_playAnimationFragment_to_winningFragment);
                 }
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
 //                    Handler handler = new Handler();

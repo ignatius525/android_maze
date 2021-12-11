@@ -277,7 +277,7 @@ public class WallFollower implements RobotDriver {
 
 	@Override
 	public void stopHandler() {
-
+		handler.removeCallbacks(driving);
 	}
 
 	@Override
