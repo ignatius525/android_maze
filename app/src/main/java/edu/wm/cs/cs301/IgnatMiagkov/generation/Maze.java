@@ -4,6 +4,10 @@
 package edu.wm.cs.cs301.IgnatMiagkov.generation;
 
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * A Maze encapsulates all relevant information about a maze 
  * that can be explored in a game. 
@@ -17,7 +21,7 @@ package edu.wm.cs.cs301.IgnatMiagkov.generation;
  * @author pk
  *
  */
-public interface Maze {
+public interface Maze extends Parcelable {
 	/**
 	 * Set the width of the maze.
 	 * @param width is greater or equal zero.

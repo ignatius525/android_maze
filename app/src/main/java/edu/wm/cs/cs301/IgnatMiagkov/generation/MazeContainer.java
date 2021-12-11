@@ -3,6 +3,10 @@
  */
 package edu.wm.cs.cs301.IgnatMiagkov.generation;
 
+import android.os.Parcel;
+
+import java.io.Serializable;
+
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Constants;
 
 /**
@@ -327,5 +331,15 @@ public class MazeContainer implements Maze {
 		// the starting position must be 
 		fullyInitialized = true;
 		return true;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+
 	}
 }

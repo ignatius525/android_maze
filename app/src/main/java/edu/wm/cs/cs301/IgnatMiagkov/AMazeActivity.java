@@ -19,12 +19,14 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.List;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.ActivityAmazeBinding;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 
 public class AMazeActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityAmazeBinding binding;
     Fragment currentFrag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

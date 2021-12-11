@@ -21,7 +21,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentPlayingManuallyBinding;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.MazePanel;
+import edu.wm.cs.cs301.IgnatMiagkov.MazeHolder;
 
 public class PlayingManuallyFragment extends Fragment {
 
@@ -29,6 +31,7 @@ public class PlayingManuallyFragment extends Fragment {
     private FragmentPlayingManuallyBinding binding;
     private int countButtonClicks;
     private MazePanel panel;
+    private Maze maze;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,8 +44,11 @@ public class PlayingManuallyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         panel = getView().findViewById(R.id.mazePanel);
         clicks = getView().findViewById(R.id.clicks);
+
+
         //Button upButton = getView().findViewById(R.id.upButton);
         TextView win = getView().findViewById(R.id.winning);
         win.setVisibility(View.GONE);
@@ -181,6 +187,15 @@ public class PlayingManuallyFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        maze = MazeHolder.getMaze();
+//        maze = (Maze) bundle.getSerializable("Maze");
+        Snackbar.make(getView(), "Height: " + maze.getHeight(), Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
     }
 
 

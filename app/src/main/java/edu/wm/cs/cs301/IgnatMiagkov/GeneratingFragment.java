@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -27,9 +28,12 @@ import java.nio.channels.AsynchronousByteChannel;
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Factory;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Floorplan;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.MazeFactory;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Order;
+import edu.wm.cs.cs301.IgnatMiagkov.MazeHolder;
+import edu.wm.cs.cs301.IgnatMiagkov.OrderHolder;
 
 public class GeneratingFragment extends Fragment implements Order{
 
@@ -89,15 +93,18 @@ public class GeneratingFragment extends Fragment implements Order{
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 selectedBuilder = bundle.getString("builderKey");
-                skillLevel= bundle.getInt("difficultyKey");
-                time = diff * 25;
+                diff = bundle.getInt("difficultyKey");
+//                Snackbar.make(getView(), "DIFF IS" + diff, Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
 //                TextView textView = getView().findViewById(R.id.textView3);
 //                textView.setText(builder);
 //                TextView textView1 = getView().findViewById(R.id.textView4);
 //                textView1.setText(diff.toString());
             }
         });
-
+//        Snackbar.make(getView(), "DIFF IS" + diff, Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+//        this.skillLevel = diff;
         Spinner spinner2 = getView().findViewById(R.id.spinner2);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.driver, android.R.layout.simple_spinner_item);
@@ -195,19 +202,26 @@ public class GeneratingFragment extends Fragment implements Order{
     @Override
     public void onStart() {
         super.onStart();
-//        switch(selectedBuilder){
-//            case "DFS":
-//                this.builder = Builder.DFS;
-//                break;
-//            case "Prim":
-//                this.builder = Builder.Prim;
-//                break;
-//            case "Boruvka":
-//                this.builder = Builder.Boruvka;
-//                break;
+        skillLevel = OrderHolder.getSkillLevel();
+        builder = OrderHolder.getBuilder();
+//        if (selectedBuilder != null) {
+//            switch (selectedBuilder) {
+//                case "Prim":
+//                    this.builder = Builder.Prim;
+//                    break;
+//                case "Boruvka":
+//                    this.builder = Builder.Boruvka;
+//                    break;
+//                default:
+//                    this.builder = Builder.DFS;
+//                    break;
+//            }
 //        }
         factory.order(this);
         task = new MyTask(this).execute(100);
+
+//        Snackbar.make(getView(),"SKILL LEVEL " + getSkillLevel(), Snackbar.LENGTH_SHORT)
+//                .setAction("Action", null).show();
 
     }
 
@@ -227,12 +241,12 @@ public class GeneratingFragment extends Fragment implements Order{
 
     @Override
     public int getSkillLevel() {
-        return this.skillLevel;
+        return skillLevel;
     }
 
     @Override
     public Builder getBuilder() {
-        return this.builder;
+        return builder;
     }
 
     @Override
@@ -247,6 +261,16 @@ public class GeneratingFragment extends Fragment implements Order{
 
     @Override
     public void deliver(Maze mazeConfig) {
+        if (Floorplan.deepdebugWall)
+        {   // for debugging: dump the sequence of all deleted walls to a log file
+            // This reveals how the maze was generated
+            mazeConfig.getFloorplan().saveLogFile(Floorplan.deepedebugWallFileName);
+        }
+        MazeHolder.setMaze(mazeConfig);
+
+//        ft.replace(android.R.id.content, fragment2);
+//        ft.addToBackStack(null);
+//        ft.commit();
 
     }
 
@@ -258,7 +282,7 @@ public class GeneratingFragment extends Fragment implements Order{
     public void updateProgress(int percentage) {
         if (this.percentDone < percentage && percentage <= 100) {
             this.percentDone = percentage;
-//            draw() ;
+//            progressBar.setProgress(percentDone);
         }
     }
 
@@ -274,12 +298,12 @@ public class GeneratingFragment extends Fragment implements Order{
         protected String doInBackground(Integer... params) {
             while(progressBar.getProgress() < progressBar.getMax()) {
 //                progressBar.setProgress(order.getPercentDone() / 100);
-//                try {
-//                    Thread.sleep(800);
+                try {
                     publishProgress(order.getPercentDone());
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                    Thread.sleep(40);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             return "Task Completed.";
         }

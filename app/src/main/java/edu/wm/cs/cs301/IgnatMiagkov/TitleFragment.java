@@ -14,7 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentTitleBinding;
+import edu.wm.cs.cs301.IgnatMiagkov.OrderHolder;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Order;
 
 public class TitleFragment extends Fragment {
 
@@ -54,6 +58,8 @@ public class TitleFragment extends Fragment {
                     // Write code to perform some action when touch is stopped.
                     Toast.makeText(getActivity(), "Current value is " + (seekBar.getProgress() + 1), Toast.LENGTH_SHORT).show();
                     selectedDifficulty = (seekBar.getProgress() + 1);
+                    Snackbar.make(getView(), "DIFF IS: " + selectedDifficulty, Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
                 }
             });
         }
@@ -90,6 +96,20 @@ public class TitleFragment extends Fragment {
                 result.putString("builderKey", selectedValueForSpinner);
                 result.putInt("difficultyKey", selectedDifficulty);
                 getParentFragmentManager().setFragmentResult("requestKey", result);
+
+                OrderHolder.setSkillLevel(selectedDifficulty);
+                switch(selectedValueForSpinner){
+                    case "DFS":
+                        OrderHolder.setBuilder(Order.Builder.DFS);
+                        break;
+                    case "Prim":
+                        OrderHolder.setBuilder(Order.Builder.Prim);
+                        break;
+                    case "Boruvka":
+                        OrderHolder.setBuilder(Order.Builder.Boruvka);
+                        break;
+                }
+
                 NavHostFragment.findNavController(TitleFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
