@@ -67,19 +67,6 @@
         app:layout_constraintTop_toBottomOf="@+id/upButton" />
 
     <TextView
-        android:id="@+id/clicks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/clicks"
-        android:textColor="#4CAF50"
-        android:textSize="20sp"
-        android:typeface="serif"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/winning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,5 +92,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/wallToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textOff="LOCAL"
+        android:textOn="FULL"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Switch
+        android:id="@+id/solutionSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Solution"
+        app:layout_constraintBottom_toTopOf="@+id/wallToggle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/zoomin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="216dp"
+        android:clickable="true"
+        android:src="@android:drawable/arrow_up_float"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/zoomout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/arrow_down_float"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zoomin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

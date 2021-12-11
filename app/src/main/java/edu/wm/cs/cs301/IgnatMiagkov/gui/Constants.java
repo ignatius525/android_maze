@@ -11,8 +11,8 @@ import android.content.res.Resources;
  */
 public class Constants {
 	// The panel used to display the maze has a fixed dimension
-	public static final int VIEW_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;
-	public static final int VIEW_HEIGHT = Resources.getSystem().getDisplayMetrics().widthPixels;
+	public static final int VIEW_WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;;
+	public static final int VIEW_HEIGHT = Resources.getSystem().getDisplayMetrics().widthPixels;;
 	public static final int MAP_UNIT = 128;
 	public static final int VIEW_OFFSET = MAP_UNIT/8;
 	public static final int STEP_SIZE = MAP_UNIT/4;

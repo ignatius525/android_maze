@@ -40,6 +40,7 @@ public class PlayingManuallyFragment extends Fragment {
     private Maze mazeConfig;
     FirstPersonView firstPersonView;
     Map mapView;
+    private int distanceTraveled;
     private boolean showMaze;           // toggle switch to show overall maze on screen
     private boolean showSolution;       // toggle switch to show solution in overall maze on screen
     private boolean mapMode; // true: display map of maze, false: do not display map of maze
@@ -75,8 +76,6 @@ public class PlayingManuallyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         panel = getView().findViewById(R.id.mazePanel);
-        clicks = getView().findViewById(R.id.clicks);
-
 
         //Button upButton = getView().findViewById(R.id.upButton);
         TextView win = getView().findViewById(R.id.winning);
@@ -90,6 +89,7 @@ public class PlayingManuallyFragment extends Fragment {
                 walk(1);
 //                countButtonClicks++;
 //                clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
+                distanceTraveled++;
                 if (isOutside(px,py)){
                     NavHostFragment.findNavController(PlayingManuallyFragment.this)
                             .navigate(R.id.action_ThirdFragment_to_winningFragment);
@@ -104,6 +104,11 @@ public class PlayingManuallyFragment extends Fragment {
                 Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 walk(-1);
+                distanceTraveled++;
+                if (isOutside(px,py)){
+                    NavHostFragment.findNavController(PlayingManuallyFragment.this)
+                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
+                }
             }
         });
 
@@ -124,10 +129,6 @@ public class PlayingManuallyFragment extends Fragment {
                 rotate(-1);
 //                countButtonClicks++;
 //                clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
-                if (isOutside(px,py)){
-                    NavHostFragment.findNavController(PlayingManuallyFragment.this)
-                            .navigate(R.id.action_ThirdFragment_to_winningFragment);
-                }
             }
         });
 
@@ -137,11 +138,54 @@ public class PlayingManuallyFragment extends Fragment {
                     // The toggle is enabled
                     Snackbar.make(getView(), "MAP IS ON", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    mapMode = true;
                 } else {
                     // The toggle is disabled
                     Snackbar.make(getView(), "MAP IS OFF", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    mapMode = false;
                 }
+                draw();
+            }
+        });
+
+        binding.wallToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    showMaze = true;
+                } else{
+                    showMaze = false;
+                }
+                draw();
+            }
+        });
+
+        binding.solutionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    showSolution = true;
+                } else{
+                    showSolution = false;
+                }
+                draw();
+            }
+        });
+
+        binding.zoomin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapView.incrementMapScale();
+                draw() ;
+            }
+        });
+
+        binding.zoomout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapView.decrementMapScale();
+                draw() ;
             }
         });
 
@@ -165,7 +209,8 @@ public class PlayingManuallyFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mazeConfig = MazeHolder.getMaze();
-
+        int minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
+        distanceTraveled = 0;
         showMaze = false ;
         showSolution = false ;
         mapMode = false;
@@ -230,10 +275,10 @@ public class PlayingManuallyFragment extends Fragment {
         // draw the first person view and the map view if wanted
         firstPersonView.draw(panel, px, py, walkStep, angle,
                 getPercentageForDistanceToExit()) ;
-//        if (isInMapMode()) {
-//            mapView.draw(panel, px, py, angle, walkStep,
-//                    isInShowMazeMode(),isInShowSolutionMode()) ;
-//        }
+        if (isInMapMode()) {
+            mapView.draw(panel, px, py, angle, walkStep,
+                    isInShowMazeMode(),isInShowSolutionMode()) ;
+        }
         // update the screen with the buffer graphics
         panel.commit();
     }

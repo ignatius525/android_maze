@@ -68,7 +68,8 @@ public class MazePanel extends View implements P5PanelF21 {
 
     @Override
     public void commit() {
-        super.draw(myCanvas);
+//        super.draw(myCanvas);
+        invalidate();
     }
 
     @Override
