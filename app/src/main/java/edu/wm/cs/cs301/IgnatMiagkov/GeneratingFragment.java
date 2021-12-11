@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.nio.channels.AsynchronousByteChannel;
+import java.util.Random;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 
@@ -204,6 +205,8 @@ public class GeneratingFragment extends Fragment implements Order{
         super.onStart();
         skillLevel = OrderHolder.getSkillLevel();
         builder = OrderHolder.getBuilder();
+        Random rnd = new Random();
+        this.seed = rnd.nextInt();
 //        if (selectedBuilder != null) {
 //            switch (selectedBuilder) {
 //                case "Prim":
