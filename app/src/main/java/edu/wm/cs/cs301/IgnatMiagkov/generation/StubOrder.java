@@ -41,6 +41,11 @@ public class StubOrder implements Order {
 	}
 
 	@Override
+	public int getPercentDone() {
+		return 0;
+	}
+
+	@Override
 	public boolean isPerfect() {
 		// TODO Auto-generated method stub
 		return perfect;

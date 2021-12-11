@@ -21,7 +21,10 @@ public interface Order {
 	 * @return the builder algorithm that is expected to be used for building the maze
 	 */
 	Builder getBuilder() ;
-	/**
+
+    int getPercentDone();
+
+    /**
 	 * Lists all maze generation algorithms that are supported
 	 * by the maze factory (Eller needs to be implemented for P2)
 	 *

@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.IgnatMiagkov;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,49 @@ import java.nio.channels.AsynchronousByteChannel;
 
 import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
 
-public class GeneratingFragment extends Fragment {
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Factory;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.MazeFactory;
+import edu.wm.cs.cs301.IgnatMiagkov.generation.Order;
 
+public class GeneratingFragment extends Fragment implements Order{
+
+    private String selectedBuilder;
     private ProgressBar progressBar;
     private String selectedDriver;
     private String selectedRobotConfig;
     private Button begin_button;
     private FragmentGeneratingBinding binding;
-    private String builder;
-    private Integer diff;
+    private int diff;
     private long time;
+    private Handler handler = new Handler();
+
+
+    private String filename;
+    private int seed;
+    private int skillLevel;
+    private Builder builder;
+    private boolean perfect;
+
+    protected Factory factory;
+    private int percentDone;
+
+    boolean started;
+
+
     AsyncTask task;
     Integer count = 1;
+
+    public GeneratingFragment(){
+        filename = null;
+        factory = new MazeFactory();
+        skillLevel = 0;
+        builder = Builder.DFS;
+        perfect = false;
+        percentDone = 0;
+        started = false;
+        seed = 13;
+    }
 
     @Override
     public View onCreateView(
@@ -56,8 +88,8 @@ public class GeneratingFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
-                builder = bundle.getString("builderKey");
-                diff = bundle.getInt("difficultyKey");
+                selectedBuilder = bundle.getString("builderKey");
+                skillLevel= bundle.getInt("difficultyKey");
                 time = diff * 25;
 //                TextView textView = getView().findViewById(R.id.textView3);
 //                textView.setText(builder);
@@ -163,7 +195,20 @@ public class GeneratingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        task = new MyTask().execute(100);
+//        switch(selectedBuilder){
+//            case "DFS":
+//                this.builder = Builder.DFS;
+//                break;
+//            case "Prim":
+//                this.builder = Builder.Prim;
+//                break;
+//            case "Boruvka":
+//                this.builder = Builder.Boruvka;
+//                break;
+//        }
+        factory.order(this);
+        task = new MyTask(this).execute(100);
+
     }
 
     @Override
@@ -179,17 +224,62 @@ public class GeneratingFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    @Override
+    public int getSkillLevel() {
+        return this.skillLevel;
+    }
+
+    @Override
+    public Builder getBuilder() {
+        return this.builder;
+    }
+
+    @Override
+    public boolean isPerfect() {
+        return this.perfect;
+    }
+
+    @Override
+    public int getSeed() {
+        return this.seed;
+    }
+
+    @Override
+    public void deliver(Maze mazeConfig) {
+
+    }
+
+    public int getPercentDone(){
+        return this.percentDone;
+    }
+
+    @Override
+    public void updateProgress(int percentage) {
+        if (this.percentDone < percentage && percentage <= 100) {
+            this.percentDone = percentage;
+//            draw() ;
+        }
+    }
+
     // Code refactored from https://www.concretepage.com/android/android-asynctask-example-with-progress-bar for async thread
     class MyTask extends AsyncTask<Integer, Integer, String> {
+
+        private Order order;
+
+        public MyTask(Order order){
+            this.order = order;
+        }
         @Override
         protected String doInBackground(Integer... params) {
-            for (; count <= params[0]; count++) {
-                try {
-                    Thread.sleep(time);
-                    publishProgress(count);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            while(progressBar.getProgress() < progressBar.getMax()) {
+//                progressBar.setProgress(order.getPercentDone() / 100);
+//                try {
+//                    Thread.sleep(800);
+                    publishProgress(order.getPercentDone());
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
             return "Task Completed.";
         }
