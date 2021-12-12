@@ -98,8 +98,8 @@ public class PlayAnimationFragment extends Fragment {
                 if (isOutside(px,py)){
                     driver.stopHandler();
                     Bundle result = new Bundle();
-                    result.putFloat("batteryUsed", robot.getBatteryLevel());
-                    result.putInt("distanceTraveled", robot.getOdometerReading());
+                    result.putFloat("batteryUsed", driver.getEnergyConsumption());
+                    result.putInt("distanceTraveled", driver.getPathLength());
                     result.putInt("minDistance", minDistance);
                     getParentFragmentManager().setFragmentResult("forWinScreenManual", result);
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
@@ -129,7 +129,6 @@ public class PlayAnimationFragment extends Fragment {
                     Bundle result = new Bundle();
                     result.putFloat("batteryUsed", robot.getBatteryLevel());
                     result.putInt("distanceTraveled", robot.getOdometerReading());
-                    result.putInt("minDistance", minDistance);
                     getParentFragmentManager().setFragmentResult("forWinScreenManual", result);
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
                             .navigate(R.id.action_playAnimationFragment_to_winningFragment);
@@ -282,7 +281,6 @@ public class PlayAnimationFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         getView().findViewById(R.id.upButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.downButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.leftButton3).setVisibility(View.GONE);
@@ -347,9 +345,9 @@ public class PlayAnimationFragment extends Fragment {
                 robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
             }
-            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
             robot.resetOdometer();
             robot.setBatteryLevel(3600);
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
         } catch(Exception e){
             if (driver.getClass().getName().equals("WallFollower")){
                 robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
@@ -357,9 +355,10 @@ public class PlayAnimationFragment extends Fragment {
                 robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
             }
-            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
             robot.resetOdometer();
             robot.setBatteryLevel(3600);
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+
         }
     }
 
