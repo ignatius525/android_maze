@@ -97,7 +97,8 @@ public class WallFollower implements RobotDriver {
 		// etc.
 		// probably dont need to do more than 3, due to gaps of 1.3 seconds between sensors and constant downtimes for all of them
 //		setSensorsOnView();
-		System.out.println(robot.getBatteryLevel());
+//		System.out.println(robot.getBatteryLevel());
+		controller.bat.setText("BATTERY LEVEL: " + robot.getBatteryLevel());
 		if (robot.isInsideRoom() && ((ReliableRobot)robot).isAtStart()) {
 			if(getOutOfRoom()) {
 				return true;

@@ -122,6 +122,7 @@ public class Wizard implements RobotDriver {
 		// energy consumed += how much it was
 		//
 		//
+		controller.bat.setText("BATTERY LEVEL: " + robot.getBatteryLevel());
 		if (robot.isAtExit()) { // this checks when the robot is at exit. Idk why this logic works, but for some reason I need to turn the opposite direction of where I detected eternity
 			if (robot.canSeeThroughTheExitIntoEternity(Direction.RIGHT)) {
 				robot.rotate(Turn.LEFT);

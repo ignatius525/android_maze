@@ -36,12 +36,19 @@ public class WinningFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
-                int minDistance = bundle.getInt("minDistance");
+                int minDistance = 0;
+                minDistance = bundle.getInt("minDistance");
                 int distanceTraveled = bundle.getInt("distanceTraveled");
+                float battery = bundle.getFloat("batteryUsed");
 //                Snackbar.make(getView(), "DIFF IS" + diff, Snackbar.LENGTH_SHORT)
 //                        .setAction("Action", null).show();
                 TextView textView1 = getView().findViewById(R.id.minDistance);
-                textView1.setText("Minimum Distance to Exit: " + minDistance);
+                if (minDistance != 0) {
+                    textView1.setText("Minimum Distance to Exit: " + minDistance);
+                }
+                else {
+                    textView1.setText("BATTERY USED: " + battery);
+                }
                 TextView textView2 = getView().findViewById(R.id.disTraveled);
                 textView2.setText("Distance Traveled: " + distanceTraveled);
 //                textView.setText(builder);

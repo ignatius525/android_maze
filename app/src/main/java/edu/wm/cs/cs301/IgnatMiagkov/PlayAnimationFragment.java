@@ -39,7 +39,7 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.WallFollower;
 
 public class PlayAnimationFragment extends Fragment {
 
-    private TextView clicks;
+    public TextView bat;
     private FragmentPlayAnimationBinding binding;
     private int countButtonClicks;
 
@@ -91,12 +91,17 @@ public class PlayAnimationFragment extends Fragment {
         binding.upButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Up Button has been hit", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(v, "Up Button has been hit", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
                 countButtonClicks++;
                 walk(1);
                 if (isOutside(px,py)){
                     driver.stopHandler();
+                    Bundle result = new Bundle();
+                    result.putFloat("batteryUsed", robot.getBatteryLevel());
+                    result.putInt("distanceTraveled", robot.getOdometerReading());
+                    result.putInt("minDistance", minDistance);
+                    getParentFragmentManager().setFragmentResult("forWinScreenManual", result);
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
                             .navigate(R.id.action_playAnimationFragment_to_winningFragment);
                 }
@@ -115,12 +120,17 @@ public class PlayAnimationFragment extends Fragment {
         binding.downButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
                 countButtonClicks++;
                 walk(-1);
                 if (isOutside(px,py)){
                     driver.stopHandler();
+                    Bundle result = new Bundle();
+                    result.putFloat("batteryUsed", robot.getBatteryLevel());
+                    result.putInt("distanceTraveled", robot.getOdometerReading());
+                    result.putInt("minDistance", minDistance);
+                    getParentFragmentManager().setFragmentResult("forWinScreenManual", result);
                     NavHostFragment.findNavController(PlayAnimationFragment.this)
                             .navigate(R.id.action_playAnimationFragment_to_winningFragment);
                 }
@@ -139,8 +149,8 @@ public class PlayAnimationFragment extends Fragment {
         binding.leftButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Left Button has been hit", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(v, "Left Button has been hit", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
                 countButtonClicks++;
 //                rotate(1);
                 rotate(1);
@@ -159,8 +169,8 @@ public class PlayAnimationFragment extends Fragment {
         binding.rightButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Right Button has been hit", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(v, "Right Button has been hit", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
                 countButtonClicks++;
                 rotate(-1);
 //                clicks.setText("Clicks to Win: " + (1000 - countButtonClicks));
@@ -272,6 +282,7 @@ public class PlayAnimationFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+//        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         getView().findViewById(R.id.upButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.downButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.leftButton3).setVisibility(View.GONE);
@@ -281,6 +292,9 @@ public class PlayAnimationFragment extends Fragment {
         getView().findViewById(R.id.leftSensor).bringToFront();
         getView().findViewById(R.id.backSensor).bringToFront();
         getView().findViewById(R.id.sensorForward).bringToFront();
+
+        bat = getView().findViewById(R.id.battery);
+
         mazeConfig = MazeHolder.getMaze();
 //        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         distanceTraveled = 0;
@@ -322,6 +336,7 @@ public class PlayAnimationFragment extends Fragment {
         driver.setMaze(mazeConfig);
 
         driver.setController(this);
+        bat.setText("BATTERY LEVEL: " + robot.getBatteryLevel());
 
         try{
             driver.drive2Exit();
