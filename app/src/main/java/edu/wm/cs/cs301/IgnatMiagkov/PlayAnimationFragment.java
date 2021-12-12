@@ -276,6 +276,11 @@ public class PlayAnimationFragment extends Fragment {
         getView().findViewById(R.id.downButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.leftButton3).setVisibility(View.GONE);
         getView().findViewById(R.id.rightButton3).setVisibility(View.GONE);
+
+        getView().findViewById(R.id.rightSensor).bringToFront();
+        getView().findViewById(R.id.leftSensor).bringToFront();
+        getView().findViewById(R.id.backSensor).bringToFront();
+        getView().findViewById(R.id.sensorForward).bringToFront();
         mazeConfig = MazeHolder.getMaze();
 //        minDistance = mazeConfig.getDistanceToExit(mazeConfig.getStartingPosition()[0], mazeConfig.getStartingPosition()[1]);
         distanceTraveled = 0;
@@ -315,7 +320,8 @@ public class PlayAnimationFragment extends Fragment {
 
         driver.setRobot(robot);
         driver.setMaze(mazeConfig);
-//        robot.toggleMapAndSolution();
+
+        driver.setController(this);
 
         try{
             driver.drive2Exit();

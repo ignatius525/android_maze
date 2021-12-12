@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
 import android.os.Handler;
 
+import edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Direction;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
@@ -18,6 +19,7 @@ public class Wizard implements RobotDriver {
 
 	Runnable driving;
 	private int speed;
+	private PlayAnimationFragment controller;
 	Handler handler = new Handler();
 	private Robot robot;
 	private Maze maze;
@@ -237,5 +239,10 @@ public class Wizard implements RobotDriver {
 	@Override
 	public void setSpeed(int time) {
 		speed = 40 * time + 20;
+	}
+
+	@Override
+	public void setController(PlayAnimationFragment frag) {
+		this.controller = frag;
 	}
 }

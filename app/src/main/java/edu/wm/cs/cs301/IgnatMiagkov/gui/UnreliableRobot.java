@@ -1,6 +1,9 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.widget.TextView;
+
 import edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment;
+import edu.wm.cs.cs301.IgnatMiagkov.R;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Direction;
 
 /**Responsibilities: Moves around the maze, extends ReliableRobot. Adds sensor failures based on user input for failure. As unreliable

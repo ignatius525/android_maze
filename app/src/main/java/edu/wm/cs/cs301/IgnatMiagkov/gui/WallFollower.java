@@ -1,7 +1,13 @@
 package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
+import android.graphics.Color;
 import android.os.Handler;
+import android.widget.TextView;
 
+import edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment;
+import edu.wm.cs.cs301.IgnatMiagkov.R;
+import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentGeneratingBinding;
+import edu.wm.cs.cs301.IgnatMiagkov.databinding.FragmentPlayAnimationBinding;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Direction;
 import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
@@ -17,15 +23,20 @@ import edu.wm.cs.cs301.IgnatMiagkov.gui.Robot.Turn;
  */
 public class WallFollower implements RobotDriver {
 
+	PlayAnimationFragment controller;
 	Runnable driving;
 	private int speed;
 	Handler handler = new Handler();
 	private Robot robot;
 	private Maze maze;
 	private static final int INITIAL_ENERGY = 3600;
-	
-	public WallFollower() {
-		// TODO Auto-generated constructor stub
+
+	public WallFollower(){
+
+	}
+
+	public void setController(PlayAnimationFragment fragment){
+		controller = fragment;
 	}
 
 	@Override
@@ -55,11 +66,7 @@ public class WallFollower implements RobotDriver {
 						handler.removeCallbacks(this);
 					}
 				} catch (Exception e){
-					try {
-						throw new Exception(e);
-					} catch (Exception exception) {
-						exception.printStackTrace();
-					}
+
 				}
 			}
 		};
@@ -89,7 +96,7 @@ public class WallFollower implements RobotDriver {
 		//		do the check
 		// etc.
 		// probably dont need to do more than 3, due to gaps of 1.3 seconds between sensors and constant downtimes for all of them
-		
+//		setSensorsOnView();
 		System.out.println(robot.getBatteryLevel());
 		if (robot.isInsideRoom() && ((ReliableRobot)robot).isAtStart()) {
 			if(getOutOfRoom()) {
@@ -206,10 +213,60 @@ public class WallFollower implements RobotDriver {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
+	private void setSensorsOnView(){
+		TextView forward = controller.getView().findViewById(R.id.sensorForward);
+		if (((ReliableRobot) robot).isOperational(Direction.FORWARD)){
+			forward.setTextColor(Color.GREEN);
+			forward.bringToFront();
+			forward.setText("Sensor Forward: ON");
+		}
+		else{
+			forward.setTextColor(Color.RED);
+			forward.bringToFront();
+			forward.setText("Sensor Forward: OFF");
+		}
+
+		TextView back = controller.getView().findViewById(R.id.backSensor);
+		if (((ReliableRobot) robot).isOperational(Direction.BACKWARD)){
+			back.setTextColor(Color.GREEN);
+			back.bringToFront();
+			back.setText("Sensor BACKWARD: ON");
+		}
+		else{
+			back.setTextColor(Color.RED);
+			back.bringToFront();
+			back.setText("Sensor BACKWARD: OFF");
+		}
+
+		TextView left = controller.getView().findViewById(R.id.leftSensor);
+		if (((ReliableRobot) robot).isOperational(Direction.LEFT)){
+			left.setTextColor(Color.GREEN);
+			left.bringToFront();
+			left.setText("Sensor LEFT: ON");
+		}
+		else{
+			left.setTextColor(Color.RED);
+			left.bringToFront();
+			left.setText("Sensor LEFT: OFF");
+		}
+
+		TextView right = controller.getView().findViewById(R.id.rightSensor);
+		if (((ReliableRobot) robot).isOperational(Direction.RIGHT)){
+			right.setTextColor(Color.GREEN);
+			right.bringToFront();
+			right.setText("Sensor RIGHT: ON");
+		}
+		else{
+			right.setTextColor(Color.RED);
+			right.bringToFront();
+			right.setText("Sensor RIGHT: OFF");
+		}
+	}
+
 	/** Get robot out of room with no surrounding walls to guide it.
 	 * @return if the robot successfully moved out of a room with no walls around it
 	 */

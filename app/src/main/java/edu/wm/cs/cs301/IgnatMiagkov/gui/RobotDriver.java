@@ -2,6 +2,7 @@ package edu.wm.cs.cs301.IgnatMiagkov.gui;
 
 import android.os.Handler;
 
+import edu.wm.cs.cs301.IgnatMiagkov.PlayAnimationFragment;
 import edu.wm.cs.cs301.IgnatMiagkov.generation.Maze;
 
 /**
@@ -85,6 +86,8 @@ public interface RobotDriver {
 	void stopHandler();
 
 	void setSpeed(int time);
+
+	void setController(PlayAnimationFragment frag);
 	
 }
 
