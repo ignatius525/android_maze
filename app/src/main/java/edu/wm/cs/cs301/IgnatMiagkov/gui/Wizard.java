@@ -96,7 +96,7 @@ public class Wizard implements RobotDriver {
 			}
 		};
 		handler.post(driving);
-		return false;
+		return true;
 
 	}
 
@@ -239,7 +239,7 @@ public class Wizard implements RobotDriver {
 
 	@Override
 	public void setSpeed(int time) {
-		speed = 40 * time + 20;
+		speed = 80 * time + 20;
 	}
 
 	@Override

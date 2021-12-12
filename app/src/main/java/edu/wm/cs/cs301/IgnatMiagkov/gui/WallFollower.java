@@ -71,7 +71,7 @@ public class WallFollower implements RobotDriver {
 			}
 		};
 		handler.post(driving);
-		return false;
+		return true;
 	}
 
 	@Override
@@ -313,7 +313,8 @@ public class WallFollower implements RobotDriver {
 			robot.move(1);
 			return true;
 		}
-		while(!((ReliableRobot)robot).isOperational(Direction.FORWARD))
+		while(!((ReliableRobot)robot).isOperational(Direction.FORWARD)){
+		}
 		if (robot.distanceToObstacle(Direction.FORWARD) == Integer.MAX_VALUE) {
 			robot.move(1);
 			return true;
@@ -340,7 +341,7 @@ public class WallFollower implements RobotDriver {
 
 	@Override
 	public void setSpeed(int time){
-		speed = 40 * time + 20;
+		speed = 80 * time + 20;
 	}
 
 }

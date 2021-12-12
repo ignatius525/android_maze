@@ -339,26 +339,26 @@ public class PlayAnimationFragment extends Fragment {
         try{
             driver.drive2Exit();
         } catch(AssertionError e){
-            if (driver.getClass().getName().equals("WallFollower")){
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+//            if (driver.getClass().getName().equals("WallFollower")){
                 robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
                 robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
-            }
+//            }
             robot.resetOdometer();
             robot.setBatteryLevel(3600);
-            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
-        } catch(Exception e){
-            if (driver.getClass().getName().equals("WallFollower")){
-                robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
-                robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
-                robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
-                robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
-            }
-            robot.resetOdometer();
-            robot.setBatteryLevel(3600);
-            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
 
+        } catch(Exception e){
+            NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
+//            if (driver.getClass().getName().equals("WallFollower")){
+                robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
+                robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
+                robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
+//            }
+            robot.resetOdometer();
+            robot.setBatteryLevel(3600);
         }
     }
 
