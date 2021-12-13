@@ -96,7 +96,7 @@ public class PlayAnimationFragment extends Fragment {
                 countButtonClicks++;
                 walk(1);
                 if (isOutside(px,py)){
-                    driver.stopHandler();
+//                    driver.stopHandler();
                     Bundle result = new Bundle();
                     result.putFloat("batteryUsed", driver.getEnergyConsumption());
                     result.putInt("distanceTraveled", driver.getPathLength());
@@ -125,7 +125,7 @@ public class PlayAnimationFragment extends Fragment {
                 countButtonClicks++;
                 walk(-1);
                 if (isOutside(px,py)){
-                    driver.stopHandler();
+//                    driver.stopHandler();
                     Bundle result = new Bundle();
                     result.putFloat("batteryUsed", robot.getBatteryLevel());
                     result.putInt("distanceTraveled", robot.getOdometerReading());
@@ -261,6 +261,22 @@ public class PlayAnimationFragment extends Fragment {
             });
         }
 
+        binding.zoomin3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapView.incrementMapScale();
+                draw() ;
+            }
+        });
+
+        binding.zoomout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapView.decrementMapScale();
+                draw() ;
+            }
+        });
+
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -340,23 +356,23 @@ public class PlayAnimationFragment extends Fragment {
             driver.drive2Exit();
         } catch(AssertionError e){
             NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
-//            if (driver.getClass().getName().equals("WallFollower")){
+            if (driver.getClass().getName().equals("WallFollower")){
                 robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
                 robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
-//            }
+            }
             robot.resetOdometer();
             robot.setBatteryLevel(3600);
 
         } catch(Exception e){
             NavHostFragment.findNavController(PlayAnimationFragment.this).navigate(R.id.action_playAnimationFragment_to_losingFragment);
-//            if (driver.getClass().getName().equals("WallFollower")){
+            if (driver.getClass().getName().equals("WallFollower")){
                 robot.stopFailureAndRepairProcess(Robot.Direction.FORWARD);
                 robot.stopFailureAndRepairProcess(Robot.Direction.RIGHT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.LEFT);
                 robot.stopFailureAndRepairProcess(Robot.Direction.BACKWARD);
-//            }
+            }
             robot.resetOdometer();
             robot.setBatteryLevel(3600);
         }
