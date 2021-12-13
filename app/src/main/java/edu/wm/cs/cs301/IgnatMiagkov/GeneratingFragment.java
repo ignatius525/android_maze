@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.IgnatMiagkov;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,7 +53,8 @@ public class GeneratingFragment extends Fragment implements Order{
     private int diff;
     private long time;
     private Handler handler = new Handler();
-
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     private String filename;
     private int seed;
@@ -77,6 +80,8 @@ public class GeneratingFragment extends Fragment implements Order{
         percentDone = 0;
         started = false;
         seed = 13;
+
+
     }
 
     @Override
@@ -92,6 +97,9 @@ public class GeneratingFragment extends Fragment implements Order{
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
@@ -230,10 +238,20 @@ public class GeneratingFragment extends Fragment implements Order{
     @Override
     public void onStart() {
         super.onStart();
+
         skillLevel = OrderHolder.getSkillLevel();
         builder = OrderHolder.getBuilder();
         Random rnd = new Random();
         this.seed = rnd.nextInt();
+        if (OrderHolder.getRevisit() == true){
+            this.seed = sharedPref.getInt(builder.toString() + skillLevel, getSeed());
+        }
+
+        Snackbar.make(getView(),"KEY " + builder.toString() + skillLevel, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+
+        editor.putInt(builder.toString() + skillLevel, this.seed);
+        editor.apply();
 //        if (selectedBuilder != null) {
 //            switch (selectedBuilder) {
 //                case "Prim":
@@ -250,8 +268,7 @@ public class GeneratingFragment extends Fragment implements Order{
         factory.order(this);
         task = new MyTask(this).execute(100);
 
-//        Snackbar.make(getView(),"SKILL LEVEL " + getSkillLevel(), Snackbar.LENGTH_SHORT)
-//                .setAction("Action", null).show();
+//
 
     }
 

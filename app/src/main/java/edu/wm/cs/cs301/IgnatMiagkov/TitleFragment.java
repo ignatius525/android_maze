@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.IgnatMiagkov;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,14 +112,32 @@ public class TitleFragment extends Fragment {
                         break;
                 }
 
+                OrderHolder.setRevisit(false);
+
                 NavHostFragment.findNavController(TitleFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
 
+
+
         binding.buttonRevisit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                OrderHolder.setSkillLevel(selectedDifficulty);
+                switch(selectedValueForSpinner){
+                    case "DFS":
+                        OrderHolder.setBuilder(Order.Builder.DFS);
+                        break;
+                    case "Prim":
+                        OrderHolder.setBuilder(Order.Builder.Prim);
+                        break;
+                    case "Boruvka":
+                        OrderHolder.setBuilder(Order.Builder.Boruvka);
+                        break;
+                }
+
+                OrderHolder.setRevisit(true);
                 NavHostFragment.findNavController(TitleFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }

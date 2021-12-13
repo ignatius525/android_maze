@@ -7,6 +7,7 @@ public class OrderHolder {
 
     private static int skillLevel;
     private static Order.Builder builder = Order.Builder.DFS;
+    private static boolean toRevisit = false;
 
     public static int getSkillLevel(){
         return skillLevel;
@@ -22,5 +23,13 @@ public class OrderHolder {
 
     public static void setBuilder(Order.Builder build){
         builder = build;
+    }
+
+    public static boolean getRevisit(){
+        return toRevisit;
+    }
+
+    public static void setRevisit(boolean bool){
+        toRevisit = bool;
     }
 }
