@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
+import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import edu.wm.cs.cs301.IgnatMiagkov.MazeHolder;
 public class PlayingManuallyFragment extends Fragment {
 
     private TextView clicks;
+    private View view;
     private FragmentPlayingManuallyBinding binding;
     private int countButtonClicks;
     private MazePanel panel;
@@ -67,7 +69,7 @@ public class PlayingManuallyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        view = getView();
         binding = FragmentPlayingManuallyBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -88,6 +90,7 @@ public class PlayingManuallyFragment extends Fragment {
                 Snackbar.make(v, "Up Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 walk(1);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 //                countButtonClicks++;
 //                clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
                 distanceTraveled++;
@@ -109,6 +112,7 @@ public class PlayingManuallyFragment extends Fragment {
                 Snackbar.make(v, "Down Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 walk(-1);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 distanceTraveled++;
                 if (isOutside(px,py)){
                     NavHostFragment.findNavController(PlayingManuallyFragment.this)
@@ -123,6 +127,7 @@ public class PlayingManuallyFragment extends Fragment {
                 Snackbar.make(v, "Left Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 rotate(1);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         });
 
@@ -132,6 +137,7 @@ public class PlayingManuallyFragment extends Fragment {
                 Snackbar.make(v, "Right Button has been hit", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 rotate(-1);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 //                countButtonClicks++;
 //                clicks.setText("Clicks to Win: " + (10 - countButtonClicks));
             }
@@ -139,6 +145,7 @@ public class PlayingManuallyFragment extends Fragment {
 
         binding.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (isChecked) {
                     // The toggle is enabled
                     Snackbar.make(getView(), "MAP IS ON", Snackbar.LENGTH_LONG)
@@ -157,6 +164,7 @@ public class PlayingManuallyFragment extends Fragment {
         binding.wallToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (isChecked){
                     showMaze = true;
                 } else{
@@ -169,6 +177,7 @@ public class PlayingManuallyFragment extends Fragment {
         binding.solutionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (isChecked){
                     showSolution = true;
                 } else{
@@ -181,6 +190,7 @@ public class PlayingManuallyFragment extends Fragment {
         binding.zoomin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 mapView.incrementMapScale();
                 draw() ;
             }
@@ -189,6 +199,7 @@ public class PlayingManuallyFragment extends Fragment {
         binding.zoomout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 mapView.decrementMapScale();
                 draw() ;
             }
